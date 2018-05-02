@@ -1,6 +1,15 @@
 # Budgt
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+This is a project to cement basic understanding of Angular code. 
+## Primary Features
+- [] Allows the user set a username.
+- [] Enables simple + - math from a set figure. 
+- [] The figure resets to a base number on a scheduled basis.
+- [] The base number is set by the user.
+- [] Background color changes when the number hits a certain alert level.
+- [] Background color changes when the stop number is hit. 
+- [] Data persists. 
 
 ## Development server
 
