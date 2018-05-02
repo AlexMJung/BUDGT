@@ -1,0 +1,7 @@
+<div class='select-user'>
+  <div class="row">
+      <div class='col-sm-1' *ngFor='let user of users'>
+        <button class='btn btn-second ' (click)=selectUser(user.id)> {{user.name}} </button>
+      </div>
+  </div>
+</div>
