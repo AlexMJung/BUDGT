@@ -21,15 +21,15 @@ export class MathComponent implements OnInit {
       countUpOperationType: true,
       currentAmount: 0.00,
     };
-
-
     if (user.countUpOperationType) {
       user.currentAmount = (user.currentAmount + input);
     } else {
       user.currentAmount = (user.currentAmount - input);
     }
     console.log('doMath hit = ');
-
   }
 
+  openSettings(): void {
+    alert('open Settings hit!');
+  }
 }

@@ -13,6 +13,8 @@ export class UserPreferencesComponent implements OnInit {
   operator: boolean;
   @Input() days: number;
 
+  currency: string[] = ['USD', 'Euro', 'Pounds', 'Yen', 'Other'];
+
   constructor() { }
 
   ngOnInit() {
