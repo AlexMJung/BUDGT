@@ -1,3 +1,4 @@
+
 export class User {
   id: string;
   name: string;
@@ -8,5 +9,7 @@ export class User {
   ohNoAmount: number;
 
   countUpOperationType: boolean;
-  resetDays?: number;
+  resetTiming?: string;
+  currencyType?: string;
+  themeColor?: string;
 }

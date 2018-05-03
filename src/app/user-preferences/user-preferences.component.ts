@@ -1,34 +1,40 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { User } from '../model/user';
+
 @Component({
-  selector: 'app-user-preferences',
   templateUrl: './user-preferences.component.html',
   styleUrls: ['./user-preferences.component.css']
 })
 export class UserPreferencesComponent implements OnInit {
-  @Input() Name: string;
-  @Input() startingAmount: number;
-  @Input() warningAmount: number;
-  @Input() doneAmount: number;
-  operator: boolean;
-  @Input() days: number;
-
+  model = new User();
   currency: string[] = ['USD', 'Euro', 'Pounds', 'Yen', 'Other'];
 
-  constructor() { }
+  constructor() {
+  this.model = {
+    'id': 'id1',
+    'name': 'Alex',
+    'startingAmount': 0.00,
+    'warningAmount': 80.00,
+    'ohNoAmount': 100.00,
+    'countUpOperationType': true,
+    'resetTiming': 'Weekly'
+  };
+  }
 
   ngOnInit() {
   }
 
   setDown(): boolean {
-    this.operator = false;
-    console.log(this.operator);
+    this.model.countUpOperationType = false;
+    console.log(this.model.countUpOperationType);
     return;
   }
 
+
   setUp(): boolean {
-    this.operator = true;
-    console.log(this.operator);
+    this.model.countUpOperationType = true;
+    console.log(this.model.countUpOperationType);
     return;
   }
 
