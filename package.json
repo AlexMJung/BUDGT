@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "server": "webpack-dev-server --inline --colors -- progress --display-error-details --display",
     "start": "ng serve --port 8000 -o",
     "build": "ng build --prod",
     "test": "ng test",

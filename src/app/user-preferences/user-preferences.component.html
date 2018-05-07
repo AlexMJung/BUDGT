@@ -1,39 +1,50 @@
 <div class="container">
-
   <h3>Wha' you want?</h3>
   <div class="row">
-    <div class="col-md-6">
-      <form #form="ngForm" novalidate>
+    <form #form="ngForm">
+      <div class="col-md-6">
         <div class="form-group">
           <label for="nameId">Account Name:</label>
-          <input id="nameId" type="text" class="form-control" required name="name" [(ngModel)]="model.name"> <!--[ngModel]="Var" is one way data binding and is pulling data off the component-->
+          <input #name="ngModel" id="nameId" type="text" class="form-control" required maxlength="8" pattern="..+" name="name" [(ngModel)]="model.name">
+          <!--[ngModel]="Var" is one way data binding and is pulling data off the component-->
+          <div *ngIf="name.invalid && name.dirty" class="alert alert-danger" role="alert">Account Name is required.</div>
+        </div>
+
+
+        <div class="form-group" [class.has-error]="start.invalid && start.dirty">
+          <label for="Start" class="form-control-label">Starting Amount</label>
+          <input #start="ngModel" id="Start" type="number" class="form-control" required name="Start" placeholder="100.00? 200.00? 1000.00?....."
+            (blur)='mathCheck(model.countUpOperationType)' [(ngModel)]="model.startingAmount">
+          <!--[(ngModel)]="Var" is two way data binding. it will both read data from the component and send data to the datacomponent.-->
+          <div *ngIf="start.invalid && start.dirty" class="alert alert-danger" role="alert">Starting Amount is required.</div>
         </div>
 
         <div class="form-group">
-          <label for="Start">Starting Amount</label>
-          <input id="Start" type="number" class="form-control" required name="Start" placeholder="100.00? 200.00? 1000.00?....." [(ngModel)]="model.startingAmount"> <!--[(ngModel)]="Var" is two way data binding. it will both read data from the component and send data to the datacomponent.-->
-       </div>
-
-        <div class="form-group">
           <label for="Warn">Warning Amount:</label>
-          <input id="Warn" type="number" class="form-control" name="Warn" placeholder="20.00? 10.00? 5.00?....." [(ngModel)]="model.warningAmount">
+          <input #warning="ngModel" id="Warn" type="number" class="form-control" name="Warn" required placeholder="20.00? 10.00? 5.00?....."
+            (blur)='mathCheck(model.countUpOperationType)' [(ngModel)]="model.warningAmount">
+          <div *ngIf="warning.invalid && warning.dirty" class="alert alert-danger" role="alert">Warning Amount is required and must be between Starting Amount and Oh No amount.</div>
         </div>
 
         <div class="form-group">
           <label for="OhNo">Oh No Amount:</label>
-          <input id="OhNo" type="number" class="form-control" name="OhNo" required placeholder="5.00? 1.00? 0.00?....." [(ngModel)]="model.ohNoAmount">
+          <input #OhNo="ngModel" id="OhNo" type="number" class="form-control" name="OhNo" required placeholder="5.00? 1.00? 0.00?....."
+            (blur)='mathCheck(model.countUpOperationType)' [(ngModel)]="model.ohNoAmount">
+          <div *ngIf="OhNo.invalid && OhNo.dirty" class="alert alert-danger" role="alert">Oh No Amount is required.</div>
         </div>
-      </form>
-    </div>
+      </div>
 
-    <div class="col-md-6">
-      <form #form="ngForm" novalidate>
-        <div class="form-group">
-          <label for="operators">Count up or down?</label>
-          <button class="btn btn-second" (click)='setUp()' tooltip="Count Up from Starting towards Oh No amount"> Count Up </button>
-          <button class="btn btn-second" (click)='setDown()' tooltip="Count Down from Starting towards Oh No (amount 0 for most folks)">
-            Count Down </button>
+      <div class="col-md-6">
+
+        <label for="operators">Count up or down?</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="operator" value="Up" (click)='mathCheck("Up")' [(ngModel)]="model.countUpOperationType">Count Up
+            <input type="radio" name="operator" value="Down" (click)='mathCheck("Down")' [(ngModel)]="model.countUpOperationType">Count Down
+          </label>
+          <div *ngIf="mathWarning" class="alert alert-danger" role="alert">{{mathWarning}}</div>
         </div>
+
         <label for="Reset">Reset Frequency</label>
         <div class="radio">
           <label>
@@ -46,24 +57,24 @@
           </label>
         </div>
 
-        <div class="form-group">
-          <label>Currency Type</label>
-          <select class="form-control" name="currency" [(ngModel)]="model.currencyType">
-            <option *ngFor="let cur of currency" value={{cur}} >
+        <div class="form-group" [class.has-error]="hasSelectError">
+          <label class='control-label'>Currency Type</label>
+          <select #currencyType="ngModel" class="form-control" name="currency" (blur)='validateSelect(currencyType.value)' (change)='validateSelect(currencyType.value)'
+            [(ngModel)]="model.currencyType">
+            <option value="default">Select a currency</option>
+            <option *ngFor="let cur of currency" value={{cur}}>
               {{ cur }}
             </option>
           </select>
+          <div *ngIf="model.currencyType === 'default' && currencyType.touched" class="alert alert-danger" role="alert">Currency type is required</div>
         </div>
 
         <div class="form-group">
           <label>Theme Colors</label>
-          <input type="color" class="form-control" name="theme" required [(ngModel)]="model.themeColor">
+          <input type="color" class="form-control" name="theme" [(ngModel)]="model.themeColor">
         </div>
-
-      </form>
-    </div>
+      </div>
+      <button class="btn btn-primary" type="button" (click)="submitForm(form)" [disabled]="model.currencyType ==='default' || form.invalid" [routerLink]="['/welcome']">Make that change!</button>
+    </form>
   </div>
-   Model {{ model | json }}
-   Angular {{ form.value | json }}
-  <button class="btn btn-primary" type="submit" [routerLink]="['/welcome']" >Make that change!</button>
 </div>

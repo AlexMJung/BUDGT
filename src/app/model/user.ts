@@ -8,7 +8,7 @@ export class User {
   warningAmount?: number;
   ohNoAmount: number;
 
-  countUpOperationType: boolean;
+  countUpOperationType: string;
   resetTiming?: string;
   currencyType?: string;
   themeColor?: string;

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { UserPreferencesComponent } from './user-preferences/user-preferences.component';
 import { SelectUserComponent } from './select-user/select-user.component';
 import { MathComponent } from './math/math.component';
+import { FormPoster } from './services/form-poster.service';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { MathComponent } from './math/math.component';
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ])
     ],
-  providers: [],
+  providers: [FormPoster],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
