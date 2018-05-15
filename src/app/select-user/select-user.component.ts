@@ -16,7 +16,6 @@ export class SelectUserComponent implements OnInit {
   ngOnInit() {
     this.users = [
       {
-        id: 'id1',
         name: 'Alex',
         startingAmount: 0,
         warningAmount: 80,
@@ -26,7 +25,6 @@ export class SelectUserComponent implements OnInit {
         currencyType: 'default'
       },
       {
-        id: 'id6',
         name: 'Sam',
         startingAmount: 100,
         warningAmount: 20,

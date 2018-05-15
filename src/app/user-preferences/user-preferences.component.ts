@@ -10,37 +10,35 @@ import { NgForm } from '@angular/forms';
 })
 export class UserPreferencesComponent implements OnInit {
   model = new User();
-  currency: string[] = ['USD', 'Euro', 'Pounds', 'Yen', 'Other'];
+  currency = [];
   hasSelectError = false;
   mathWarning: string;
 
   constructor(private formPoster: FormPoster) {
-    this.model = {
-      id: 'id1',
-      'name': 'Alex',
-      'startingAmount': 0.00,
-      'warningAmount': 80.00,
-      'ohNoAmount': 100.00,
-      'countUpOperationType': 'Up',
-      'resetTiming': 'Weekly',
-      'currencyType': 'default'
-    };
+    this.formPoster.getCurrencyTypes()
+      .subscribe(
+        data => this.currency = data.currencyTypes,
+        err => console.log('get error: ', err)
+      );
   }
 
 submitForm(form: NgForm) {
   // form validation
   this.validateSelect(this.model.currencyType);
-  if (this.model.currencyType) {
+  if (this.model.currencyType === 'default') {
   return; }
 
-  this.formPoster.postNewAccount(this.model);
+  this.formPoster.postNewAccount(this.model)
+    .subscribe(
+      data => console.log('success', data),
+      err => console.log('error', err)
+    );
 }
 
   ngOnInit() {
   }
 
   validateSelect(value) {
-    console.log('currency: ' + this.model.currencyType);
     if (value === 'default') {
       this.hasSelectError = true;
     } else {

@@ -1,17 +1,23 @@
-
-  <div>
-    <button class="btn btn-primary" [routerLink]="['/settings']">Settings</button>
-  </div>
-
-
 <div>
   <h2>Enter amount spent</h2>
 
-  <input type='number' placeholder='0.00' />
+  <form (ngSubmit)="doMath()" [formGroup]="mathForm">
+    <!-- <fieldset> -->
+      <label for="input">You Spent</label>
+  <input id="input" type="number" placeholder='0.00' formControlName="myInput"/>
 
-  <button (click)="doMath()">go!</button>
+  <button class="btn btn-primary" type="submit" [disabled]="!mathForm.dirty">go!</button>
+<!-- </fieldset> -->
+</form>
 
   <div class="remaining">
-    user.currentAmount = remaining
+    Remaining funds = {{user.currentAmount}}
   </div>
+<br>Dirty: {{mathForm.dirty}}
+<br>Valid: {{mathForm.valid}}
+<br>Value: {{mathForm.value | json}}
+</div>
+
+<div>
+  <button class="btn btn-primary" [routerLink]="['/settings']">Account Settings</button>
 </div>
